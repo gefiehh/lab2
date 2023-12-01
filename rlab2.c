@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "lab2.h"
 
 void write(){
@@ -32,50 +33,19 @@ void read(){
 		return;
 	}
 	menu mn;
+	int count = 0;
+	char arr[100];
 	while(fscanf(f, "%s %d %s %d", mn.drinks, &mn.dprice, mn.food, &mn.fprice) == 4)
-		printf("%s %d %s %d\n", mn.drinks, mn.dprice, mn.food, mn.fprice);
+		count++;
+	rewind(f);
+	menu*arr = (menu*)calloc(count, sizeof(menu));
+	for(int i = 0; i < count; i++){
+		fscanf(f, "%s %d %s %d", arr[i].drinks, &arr[i].dprice, arr[i].food, &arr[i].fprice);
+		printf("%s %d %s %d\n", arr[i].drinks, &arr[i].dprice, arr[i].food, &arr[i].fprice);
+	}
+	free(arr);
 	fclose(f);
 }
-
-/*int binsearch(int *num, int n, int key){
-	int left = 0;
-	int right = n - 1;
-	int index = -1;
-	while(left <= right){
-		int mid = (left + right)/2;
-		if(key == num[mid]){
-			index = mid;
-			break;
-		}
-		if(key < num[mid])
-			right = mid - 1;
-		else
-			left = mid + 1;
-	}
-	return index;
-}
-
-void search(){
-	FILE*f = fopen("file.txt", "r");
-	if(f == NULL){
-		printf("error");
-		return;
-	}
-	int a[sizeof(menu)];
-        menu mn;
-        while(fscanf(f, "%s %d %s %d", mn.drinks, &mn.dprice, mn.food, &mn.fprice) == 4){
-		for(int i = 0; i < sizeof(menu); i++)
-			fscanf(f, "%d", &a[i]);
-	}
-	int key;
-	scanf("%d", &key);
-	int index = binsearch(a, sizeof(menu), key);
-	if(index >= 0)
-		printf("find %d in %d\n", a[index], index);
-	else
-		printf("not found\n");
-	fclose(f);
-}*/
 
 void search(){
 	FILE*f = fopen("file.txt", "r");
@@ -91,7 +61,7 @@ void search(){
 			printf("%d is price of %s\n", mn.dprice, mn.drinks);
 		if(mn.fprice == key)
 			printf("%d is price of %s\n", mn.fprice, mn.food);
-		else
+		if(mn.dprice != key and mn.frice != key)
 			printf("error\n");
 	}
 	fclose(f);

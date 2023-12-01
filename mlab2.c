@@ -16,8 +16,7 @@ int main(){
 			search();
 			break;
 		default:
-			printf("error");
+			printf("error\n");
 	}
 	return 0;
 }
-

@@ -8,5 +8,3 @@ typedef struct {
 	char food[40];
 	int fprice;
 }menu;
-
-
